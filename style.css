@@ -866,23 +866,6 @@ body.view-control-buttons .viewControlButton {
   color: #fff;
 }
 
-.videowall {
-}
-
-.videowall {
-  background-color: #111;
-  /*background-color: #f00;*/
-  position: relative;
-  width: 560px;
-  height: 315px;
-}
-
-.videowall .message {
-  text-align: center;
-  /*padding-top: 190px;*/
-  font-size: 50px;
-  color: #ddd;
-}
 
 #deviceOrientationToggle {
   display: block;
