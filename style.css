@@ -62,7 +62,7 @@ body.fullscreen-enabled #titleBar {
 }
 
 body.fullscreen-enabled.mobile #titleBar {
-  right: 160px;
+  right: 120px;
 }
 
 /* If there are multiple scenes the title bar must make space for the scene list toggle */
