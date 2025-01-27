@@ -1,0 +1,84 @@
+
+@media (min-width: 200px) {
+    .mapcon{
+        width: 60vw; 
+        height: 45vw; /* height:width ratio = 3/4 = .75  */
+        max-height: 60vh;
+        max-width: 80vh; /* 4/3 = 1.333 */
+    }
+}
+
+@media (min-width: 400px) {
+    .mapcon{
+        width: 50vw; 
+        height: 37.5vw; /* height:width ratio = 3/4 = .75  */
+        max-height: 50vh;
+        max-width: 66.666vh; /* 4/3 = 1.333 */
+    }
+}
+@media (min-width: 600px) {
+    .mapcon{
+        width: 40vw; 
+        height: 30vw; /* height:width ratio = 3/4 = .75  */
+        max-height: 40vh;
+        max-width: 53.333vh; /* 4/3 = 1.333 */
+    }
+    .mobile .mapcon{
+        width: 50vw; 
+        height: 37.5vw; /* height:width ratio = 3/4 = .75  */
+        max-height: 50vh;
+        max-width: 66.666vh; /* 4/3 = 1.333 */
+    }
+}
+.mapcon{
+    width: 30vw; 
+    height: 22.5vw; /* height:width ratio = 3/4 = .75  */
+    max-height: 30vh;
+    max-width: 40vh; /* 4/3 = 1.333 */
+    position: absolute;
+    right: 10px;
+    float: right;
+    top: 50px;
+    z-index: 50;
+    border: 5px solid rgb(130, 130, 130);
+    visibility: show;
+    transition: height 1s, width 1s, padding 1s, visibility 1s,
+        opacity 0.5s ease-out;
+}
+
+.map{
+    display: none;
+}
+
+.map.show{
+    display: block;
+}
+
+.mobile .mapcon{
+    top: 60px;
+}
+.mapimg {
+    width: 100%;
+    height: 100%;
+}
+
+/* PROMJENA VELIČINE TOČKICA */
+.marker-wrapper{
+    position: absolute;
+    height: 6%;
+    width: 6%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    transform: translate(-50%, -50%);
+}
+
+.mark{
+    cursor: pointer;
+    fill: white;
+}
+
+.mark.active{
+    fill: red;
+}

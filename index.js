@@ -6,7 +6,6 @@
   var bowser = window.bowser;
   var screenfull = window.screenfull;
   var data = window.APP_DATA;
-  var activeScene = null;
 
   // Grab elements from DOM.
   var panoElement = document.querySelector('#pano');
@@ -67,7 +66,7 @@
       { cubeMapPreviewUrl: urlPrefix + "/" + data.id + "/preview.jpg" });
     var geometry = new Marzipano.CubeGeometry(data.levels);
 
-    var limiter = Marzipano.RectilinearView.limit.traditional(data.faceSize, 100 * Math.PI / 180);
+    var limiter = Marzipano.RectilinearView.limit.traditional(data.faceSize, 100*Math.PI/180, 120*Math.PI/180);
     var view = new Marzipano.RectilinearView(data.initialViewParameters, limiter);
 
     var scene = viewer.createScene({
@@ -134,23 +133,17 @@
     showSceneList();
   }
 
-  // Set handler for scene switch.
-  scenes.forEach(function (scene) {
-    addMapMarker(scene);
-    var el = document.querySelector('#sceneList .scene .text[data-id="' + scene.data.id + '"]');
-    if (el !== null) {
-      el.addEventListener('click', function () {
-        switchScene(scene);
-        // On mobile, hide scene list after selecting a scene.
-        if (document.body.classList.contains('mobile')) {
-          hideSceneList();
-        }
-      });
+// Set handler for scene switch.
+scenes.forEach(function(scene) {
+  var el = document.querySelector('#sceneList .scene[data-id="' + scene.data.id + '"]');
+  el.addEventListener('click', function() {
+    switchScene(scene);
+    // On mobile, hide scene list after selecting a scene.
+    if (document.body.classList.contains('mobile')) {
+      hideSceneList();
     }
   });
-
-  var markerList = document.querySelectorAll(".mark");
-
+});
 
   // DOM elements for view controls.
   var viewUpElement = document.querySelector('#viewUp');
@@ -188,14 +181,13 @@
 
   function switchScene(scene) {
     stopAutorotate();
-    var initialViewParameters = scene.data.initialViewParameters;
-    scene.view.setParameters(initialViewParameters);
-    activeScene = scene;
+    scene.view.setParameters(scene.data.initialViewParameters);
     scene.scene.switchTo();
     startAutorotate();
     updateSceneName(scene);
     updateSceneList(scene);
   }
+
 
   function updateSceneName(scene) {
     sceneNameElement.innerHTML = sanitize(scene.data.name);
@@ -208,6 +200,29 @@
         el.classList.add('current');
       } else {
         el.classList.remove('current');
+      }
+    }
+  }
+  
+  function updateMapImage(scene) {
+    //mapElement.setAttribute("src", scene.data.mapimage);
+    for (var i = 0; i < mapContainerElements.length; i++) {
+      var el = mapContainerElements[i];
+      if (el.getAttribute('id') === 'map' + scene.data.mapcontainer) {
+        el.classList.add('show');
+      } else {
+        el.classList.remove('show');
+      }
+    }
+  }
+
+  function updateMarker(scene) {
+    for (var i = 0; i < markerList.length; i++) {
+      var el = markerList[i];
+      if (el.getAttribute('data-id') === scene.data.id) {
+        el.classList.add('active');
+      } else {
+        el.classList.remove('active');
       }
     }
   }
@@ -300,6 +315,9 @@
     }
   }
 
+
+
+  
   function createLinkHotspotElement(hotspot) {
 
     // Create wrapper element to hold icon and tooltip.
@@ -320,8 +338,9 @@
     }
 
     // Add click event handler.
-    wrapper.addEventListener('click', function() {
-      switchScene(findSceneById(hotspot.target));
+    wrapper.addEventListener('click', function () {
+      const s = findSceneById(hotspot.target);
+      switchScene(s);
     });
 
     // Prevent touch and scroll events from reaching the parent element.
